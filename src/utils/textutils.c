@@ -10,11 +10,11 @@ float scoretext(char * in, size_t len, int strict)
   for(i = 0; i < len; i++)
   {
     // Discard if contains nonprintable characters
-    if(strict && !isprint(in[i])) return FLT_MAX;
+    if(strict && !isprint(in[i]) && !isspace(in[i])) return FLT_MAX;
     if(isalpha(in[i]))
       hits[toupper(in[i]) - 65]++;
     else
-      hits[26]++;
+      hits[26] += 10;
   }
 
   // Score character frequency
