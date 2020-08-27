@@ -3,43 +3,14 @@ CFLAGS = -c -Wall -g -O3
 LD = $(CC)
 LDFLAGS = -lcrypto -lssl
 
-TARGET = MyProject
-
 OBJECTS = $(patsubst src/utils/%.c, %.o, $(shell find ./src/utils -name "*.c"))
+TARGETS = $(patsubst ./src/challenges/%.c, bin/%, $(shell find ./src/challenges -name "*.c"))
 
-all: bin/s1/c1 bin/s1/c2 bin/s1/c3 bin/s1/c4 bin/s1/c5 bin/s1/c6 bin/s1/c7 bin/s1/c8
+all: $(TARGETS)
 
-bin/s1/c1: $(OBJECTS) src/challenges/set1/challenge1.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
-
-bin/s1/c2: $(OBJECTS) src/challenges/set1/challenge2.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
-
-bin/s1/c3: $(OBJECTS) src/challenges/set1/challenge3.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
-
-bin/s1/c4: $(OBJECTS) src/challenges/set1/challenge4.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
-
-bin/s1/c5: $(OBJECTS) src/challenges/set1/challenge5.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
-
-bin/s1/c6: $(OBJECTS) src/challenges/set1/challenge6.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
-
-bin/s1/c7: $(OBJECTS) src/challenges/set1/challenge7.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
-
-bin/s1/c8: $(OBJECTS) src/challenges/set1/challenge8.c
-				mkdir -p bin/s1/
-				$(LD) -o $@ $^ $(LDFLAGS)
+bin/%: $(OBJECTS) src/challenges/%.c
+	mkdir -p $(dir $@)
+	$(LD) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-				$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
