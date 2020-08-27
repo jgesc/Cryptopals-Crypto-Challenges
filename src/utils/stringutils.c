@@ -133,3 +133,16 @@ size_t readb64(const char * str, unsigned char * out, size_t max)
   // Return decoded bytes
   return req;
 }
+
+void printstr(const unsigned char * bytes, size_t len)
+{
+  size_t i;
+  for(i = 0; i < len; i++)
+  {
+    if(bytes[i] > 31 && bytes[i] < 127)
+      putchar(bytes[i]);
+    else
+      printf("\\x%02x", bytes[i]);
+  }
+  putchar('\n');
+}
