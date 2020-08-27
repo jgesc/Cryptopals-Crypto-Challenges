@@ -99,7 +99,7 @@ size_t readb64(const char * str, unsigned char * out, size_t max)
   size_t req = 3 * len / 4 - (str[len - 1] == '=' ? (str[len - 2] == '=' ? 2 : 1) : 0);
 
   // Basic initial checks
-  if(max < len || len % 4) return 0;
+  if(max < req || len % 4) return 0;
 
   // Decode
   static const int b64table[256] =
@@ -116,6 +116,7 @@ size_t readb64(const char * str, unsigned char * out, size_t max)
 
   int val =-1, valb = -8;
   size_t i, j = 0;
+  len = len - (str[len - 1] == '=' ? (str[len - 2] == '=' ? 2 : 1) : 0);
   for(i = 0; i < len; i++)
   {
     char c = str[i];
