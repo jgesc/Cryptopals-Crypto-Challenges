@@ -30,4 +30,6 @@ size_t readb64(const char * str, unsigned char * out, size_t max);
 
 void printstr(const unsigned char * bytes, size_t len);
 
+size_t b64len(const char * str);
+
 #endif /* end of include guard: __STRINGUTILS_H__ */

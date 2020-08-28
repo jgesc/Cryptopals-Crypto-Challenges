@@ -146,3 +146,9 @@ void printstr(const unsigned char * bytes, size_t len)
   }
   putchar('\n');
 }
+
+size_t b64len(const char * str)
+{
+  size_t len = strlen(str);
+  return 3 * len / 4 - (str[len - 1] == '=' ? (str[len - 2] == '=' ? 2 : 1) : 0);
+}
