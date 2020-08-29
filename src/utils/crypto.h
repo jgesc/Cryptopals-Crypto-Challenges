@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <openssl/evp.h>
 
 size_t pkcs7(unsigned char * buff, size_t msglen, size_t bsize);
@@ -16,5 +17,7 @@ int decrypt_aes128ecb(const unsigned char * c, size_t cl, unsigned char * p, con
 void encrypt_aes128cbc(const unsigned char * p, size_t pl, unsigned char * c, const unsigned char * k, const unsigned char * iv);
 
 void decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, const unsigned char * k, const unsigned char * iv);
+
+int detect_ebc(const unsigned char * c, size_t cl);
 
 #endif /* end of include guard: __CRYPTO_H__ */

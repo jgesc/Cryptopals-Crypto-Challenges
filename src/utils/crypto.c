@@ -80,3 +80,16 @@ void decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, co
     pblock = c + i * 16;
   }
 }
+
+int detect_ebc(const unsigned char * c, size_t cl)
+{
+  // Look for repeating patterns
+  int nblocks = cl / 16;
+  int i, j, rep = 0;
+  for(i = 0; i < nblocks - 1; i++)
+    for(j = i + 1; j < nblocks; j++)
+      if(strncmp(c + i * 16, c + j * 16, 16) == 0)
+        rep++;
+
+  return rep;
+}
