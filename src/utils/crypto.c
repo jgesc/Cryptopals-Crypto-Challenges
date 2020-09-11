@@ -30,7 +30,7 @@ int decrypt_aes128ecb(const unsigned char * c, size_t cl, unsigned char * p, con
   EVP_DecryptInit(ctx, EVP_aes_128_ecb(), k, NULL);
   EVP_DecryptUpdate(ctx, p, &outl, c, cl);
   int _outl = 0;
-  EVP_DecryptFinal(ctx, p + outl, &_outl);
+  if(!EVP_DecryptFinal(ctx, p + outl, &_outl)) puts("ER\n");
   EVP_CIPHER_CTX_free(ctx);
   int pl = outl + _outl;
   return pl;
