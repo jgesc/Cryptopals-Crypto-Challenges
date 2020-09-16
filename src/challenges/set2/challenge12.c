@@ -106,7 +106,7 @@ int main(void)
     for(j = 0; j < 256; j++)
     {
       char * dictentry = dict + j * blksize;
-      if(strncmp(currblk, dictentry, blksize) == 0)
+      if(memcmp(currblk, dictentry, blksize) == 0)
         break;
     }
     if(j == 256)
