@@ -93,3 +93,20 @@ int detect_ebc(const unsigned char * c, size_t cl)
 
   return rep;
 }
+
+int pkcs7strip(unsigned char * p, size_t l)
+{
+  int pl = p[l - 1]; // Padding length
+
+  // Check padding
+  int i;
+  for(i = 0; i < pl; i++)
+    if(p[l - 1 - i] != pl) return 0;
+
+  // Strip padding
+  for(i = 0; i < pl; i++)
+    p[l - 1 - i] = 0;
+
+  // Return
+  return pl;
+}

@@ -20,4 +20,6 @@ void decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, co
 
 int detect_ebc(const unsigned char * c, size_t cl);
 
+int pkcs7strip(unsigned char * p, size_t l);
+
 #endif /* end of include guard: __CRYPTO_H__ */
