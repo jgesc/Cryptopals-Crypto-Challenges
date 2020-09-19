@@ -14,9 +14,9 @@ int encrypt_aes128ecb(const unsigned char * p, size_t pl, unsigned char * c, con
 
 int decrypt_aes128ecb(const unsigned char * c, size_t cl, unsigned char * p, const unsigned char * k);
 
-void encrypt_aes128cbc(const unsigned char * p, size_t pl, unsigned char * c, const unsigned char * k, const unsigned char * iv);
+size_t encrypt_aes128cbc(const unsigned char * p, size_t pl, unsigned char * c, const unsigned char * k, const unsigned char * iv);
 
-void decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, const unsigned char * k, const unsigned char * iv);
+size_t decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, const unsigned char * k, const unsigned char * iv);
 
 int detect_ebc(const unsigned char * c, size_t cl);
 

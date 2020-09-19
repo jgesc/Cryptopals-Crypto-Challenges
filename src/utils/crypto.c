@@ -30,13 +30,13 @@ int decrypt_aes128ecb(const unsigned char * c, size_t cl, unsigned char * p, con
   EVP_DecryptInit(ctx, EVP_aes_128_ecb(), k, NULL);
   EVP_DecryptUpdate(ctx, p, &outl, c, cl);
   int _outl = 0;
-  if(!EVP_DecryptFinal(ctx, p + outl, &_outl)) puts("ER\n");
+  EVP_DecryptFinal(ctx, p + outl, &_outl);
   EVP_CIPHER_CTX_free(ctx);
   int pl = outl + _outl;
   return pl;
 }
 
-void encrypt_aes128cbc(const unsigned char * p, size_t pl, unsigned char * c, const unsigned char * k, const unsigned char * iv)
+size_t encrypt_aes128cbc(const unsigned char * p, size_t pl, unsigned char * c, const unsigned char * k, const unsigned char * iv)
 {
   // Point previous block to IV
   const unsigned char * pblock = iv;
@@ -56,9 +56,11 @@ void encrypt_aes128cbc(const unsigned char * p, size_t pl, unsigned char * c, co
     // Point previous block to new ciphered block
     pblock = c + i * 16;
   }
+
+  return 16 * nblocks;
 }
 
-void decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, const unsigned char * k, const unsigned char * iv)
+size_t decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, const unsigned char * k, const unsigned char * iv)
 {
   // Point previous block to IV
   unsigned const char * pblock = iv;
@@ -79,6 +81,8 @@ void decrypt_aes128cbc(const unsigned char * c, size_t cl, unsigned char * p, co
     // Point previous block to last ciphered block
     pblock = c + i * 16;
   }
+
+  return 16 * nblocks;
 }
 
 int detect_ebc(const unsigned char * c, size_t cl)
