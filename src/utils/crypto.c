@@ -114,3 +114,29 @@ int pkcs7strip(unsigned char * p, size_t l)
   // Return
   return pl;
 }
+
+void aes128ctr(const unsigned char * in, size_t l, unsigned char * out,
+  const unsigned char * k, uint64_t nonce)
+{
+  uint64_t ctr = 0; // Counter register
+  unsigned char buff[32]; // AES stream buffer
+  unsigned char blck[16] = {0}; // AES block buffer
+  uint64_t * _nonce = (uint64_t *)blck; // Point to nonce
+  uint64_t * _ctr = (uint64_t *)(blck + 8); // Point to counter
+  *_nonce = htole64(nonce); // Store nonce little-endian
+
+  // Iterate each plaintext byte
+  size_t i;
+  for(i = 0; i < l; i++)
+  {
+    // Generate next AES block every 16 bytes
+    if(!(i % 16))
+    {
+      *_ctr = htole64(ctr++);
+      encrypt_aes128ecb(blck, 16, buff, k);
+    }
+
+    // Xor
+    out[i] = in[i] ^ buff[i % 16];
+  }
+}
