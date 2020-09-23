@@ -54,3 +54,28 @@ uint32_t mtrand()
 
   return y;
 }
+
+uint32_t * mtgetintstate()
+{
+  return mt;
+}
+
+void mtrandarr(uint32_t * arr, size_t n)
+{
+  int i;
+  for(i = 0; i < n; i++)
+    arr[i] = mtrand();
+}
+
+uint32_t mtuntemper(uint32_t y)
+{
+  y ^= (y >> L);
+  y ^= ((y << T) & C);
+  int i;
+  for(i = 0; i < 32; i++)
+    y ^= ((y & (1 << i)) << S) & B;
+  y ^= (((y & (0xFFFFFFFF << (W - U))) >> U) & D);
+  y ^= (((y & (0xFFFFFFFF >> U)) >> U) & D);
+
+  return y;
+}
