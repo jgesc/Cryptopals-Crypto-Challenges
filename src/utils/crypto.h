@@ -28,7 +28,10 @@ int pkcs7strip(unsigned char * p, size_t l);
 void aes128ctr(const unsigned char * in, size_t l, unsigned char * out,
   const unsigned char * k, uint64_t nonce);
 
-void mtcrypt(const unsigned char * in, size_t l, unsigned char * out, 
+void aes128ctroff(const unsigned char * in, size_t l, unsigned char * out,
+  const unsigned char * k, uint64_t nonce, uint64_t offset);
+
+void mtcrypt(const unsigned char * in, size_t l, unsigned char * out,
   uint32_t k);
 
 #endif /* end of include guard: __CRYPTO_H__ */
