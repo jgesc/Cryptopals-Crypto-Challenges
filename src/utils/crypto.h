@@ -1,6 +1,7 @@
 #ifndef __CRYPTO_H__
 #define __CRYPTO_H__
 
+#include "mtrand.h"
 #include "xorutils.h"
 
 #include <endian.h>
@@ -26,5 +27,8 @@ int pkcs7strip(unsigned char * p, size_t l);
 
 void aes128ctr(const unsigned char * in, size_t l, unsigned char * out,
   const unsigned char * k, uint64_t nonce);
+
+void mtcrypt(const unsigned char * in, size_t l, unsigned char * out, 
+  uint32_t k);
 
 #endif /* end of include guard: __CRYPTO_H__ */

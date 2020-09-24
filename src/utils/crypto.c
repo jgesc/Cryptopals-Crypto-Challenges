@@ -140,3 +140,25 @@ void aes128ctr(const unsigned char * in, size_t l, unsigned char * out,
     out[i] = in[i] ^ buff[i % 16];
   }
 }
+
+void mtcrypt(const unsigned char * in, size_t l, unsigned char * out,
+  uint32_t k)
+{
+  mtseed(k);
+  size_t i;
+  int j = 4;
+  uint32_t bbuff;
+  uint8_t * b = (uint8_t*)(&bbuff);
+  for(i = 0; i < l; i++)
+  {
+    // Get next 4 bytes
+    if(j > 3)
+    {
+      bbuff = mtrand();
+      j = 0;
+    }
+
+    // Encrypt
+    out[i] = in[i] ^ b[j++];
+  }
+}
