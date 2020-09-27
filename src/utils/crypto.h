@@ -3,6 +3,7 @@
 
 #include "mtrand.h"
 #include "xorutils.h"
+#include "sha1.h"
 
 #include <endian.h>
 #include <stdint.h>
@@ -33,5 +34,11 @@ void aes128ctroff(const unsigned char * in, size_t l, unsigned char * out,
 
 void mtcrypt(const unsigned char * in, size_t l, unsigned char * out,
   uint32_t k);
+
+void macsha1(const uint8_t * data, size_t l, uint8_t out[20],
+  const uint8_t key[16]);
+
+int macsha1chk(const uint8_t * data, size_t l, const uint8_t mac[20],
+  const uint8_t key[16]);
 
 #endif /* end of include guard: __CRYPTO_H__ */

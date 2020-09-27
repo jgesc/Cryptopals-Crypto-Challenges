@@ -188,3 +188,39 @@ void mtcrypt(const unsigned char * in, size_t l, unsigned char * out,
     out[i] = in[i] ^ b[j++];
   }
 }
+
+void macsha1(const uint8_t * data, size_t l, uint8_t out[20],
+  const uint8_t key[16])
+{
+  // Create context
+  SHA1_CTX ctx;
+  SHA1Init(&ctx);
+
+  // Hash key
+  SHA1Update(&ctx, key, 16);
+  // Hash data
+  SHA1Update(&ctx, data, l);
+
+  // Final round
+  SHA1Final(out, &ctx);
+}
+
+int macsha1chk(const uint8_t * data, size_t l, const uint8_t mac[20], 
+  const uint8_t key[16])
+{
+  // Create context
+  SHA1_CTX ctx;
+  SHA1Init(&ctx);
+
+  // Hash key
+  SHA1Update(&ctx, key, 16);
+  // Hash data
+  SHA1Update(&ctx, data, l);
+
+  // Final round
+  uint8_t datamac[20];
+  SHA1Final(datamac, &ctx);
+
+  // Compare
+  return memcmp(mac, datamac, 20) == 0;
+}
