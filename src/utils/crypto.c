@@ -205,7 +205,7 @@ void macsha1(const uint8_t * data, size_t l, uint8_t out[20],
   SHA1Final(out, &ctx);
 }
 
-int macsha1chk(const uint8_t * data, size_t l, const uint8_t mac[20], 
+int macsha1chk(const uint8_t * data, size_t l, const uint8_t mac[20],
   const uint8_t key[16])
 {
   // Create context
@@ -223,4 +223,38 @@ int macsha1chk(const uint8_t * data, size_t l, const uint8_t mac[20],
 
   // Compare
   return memcmp(mac, datamac, 20) == 0;
+}
+
+void macmd4(uint8_t * data, size_t l, uint8_t out[16], uint8_t key[16])
+{
+  // Create context
+  md4_context ctx;
+  md4_starts(&ctx);
+
+  // Hash key
+  md4_update(&ctx, key, 16);
+  // Hash data
+  md4_update(&ctx, data, l);
+
+  // Final round
+  md4_finish(&ctx, out);
+}
+
+int macmd4chk(uint8_t * data, size_t l, uint8_t mac[16], uint8_t key[16])
+{
+  // Create context
+  md4_context ctx;
+  md4_starts(&ctx);
+
+  // Hash key
+  md4_update(&ctx, key, 16);
+  // Hash data
+  md4_update(&ctx, data, l);
+
+  // Final round
+  uint8_t datamac[16];
+  md4_finish(&ctx, datamac);
+
+  // Compare
+  return memcmp(mac, datamac, 16) == 0;
 }

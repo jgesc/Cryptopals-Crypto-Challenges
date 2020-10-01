@@ -1,6 +1,7 @@
 #ifndef __CRYPTO_H__
 #define __CRYPTO_H__
 
+#include "md4.h"
 #include "mtrand.h"
 #include "xorutils.h"
 #include "sha1.h"
@@ -40,5 +41,9 @@ void macsha1(const uint8_t * data, size_t l, uint8_t out[20],
 
 int macsha1chk(const uint8_t * data, size_t l, const uint8_t mac[20],
   const uint8_t key[16]);
+
+void macmd4(uint8_t * data, size_t l, uint8_t out[16], uint8_t key[16]);
+
+int macmd4chk(uint8_t * data, size_t l, uint8_t mac[16], uint8_t key[16]);
 
 #endif /* end of include guard: __CRYPTO_H__ */

@@ -1,14 +1,16 @@
 #include "stringutils.h"
 
-void printhex(const unsigned char * bytes, size_t len)
+void printhex(const void * src, size_t len)
 {
+  const unsigned char * bytes = src;
   size_t i;
   for(i = 0; i < len; i++) printf("%02x", bytes[i]);
   putchar('\n');
 }
 
-void printb64(const unsigned char * bytes, size_t len)
+void printb64(const void * src, size_t len)
 {
+  const unsigned char * bytes = src;
   // Character table
   static const char * b64table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   // Buffers
